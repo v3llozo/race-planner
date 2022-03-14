@@ -9,3 +9,7 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.change-button {
+  @apply mx-1 mt-1 w-10 h-10 align-middle rounded-lg text-white;
+}

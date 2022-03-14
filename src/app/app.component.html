@@ -1,37 +1,49 @@
 <div>
-  <h1 class="title font-bold text-center text-5xl mt-5 mb-9 text-sky-800">
+  <h1 class="title font-bold text-center text-5xl mt-5 mb-6 text-sky-800">
     {{ title }}
   </h1>
   <hr />
   <div class="lap-counter text-center mt-4 mb-3">
-    <p class="text-xl">Total laps</p>
+    <p class="text-2xl">Total laps</p>
     <input
-      class="text-2xl w-14 rounded-lg text-center ml-3 mr-2 pl-1 pr-1 border-solid border-2"
+      class="text-2xl w-14 rounded-lg text-center mt-3 pl-1 pr-1 border-solid border-2"
       type="number"
       name="totalLaps"
       id="totalLaps"
       [value]="totalLaps"
+      (change)="changeLaps($event)"
     />
   </div>
 
-  <div class="text-center bg-slate-100 rounded-lg mx-auto pt-3 pb-3 max-w-md">
+  <div class="text-center mx-auto pt-3 pb-3 max-w-2xl">
     <h3 class="text-2xl">Tyre laps</h3>
     <div class="flex flex-row justify-center">
       <div
         *ngFor="let tyre of tyres"
-        class="tyres-config w-1/5 bg-slate-200 rounded-lg p-3 m-3 min-w-fit max-w-xs"
+        class="tyres-config w-1/5 bg-slate-300 rounded-lg px-3 pb-2 pt-1 m-3 min-w-fit max-w-xs"
       >
-        <p class="">{{ tyre.compound | titlecase }}</p>
-        <p class="">{{ tyre.laps }}</p>
+        <p class="font-semibold text-lg">{{ tyre.compound | titlecase }}</p>
+        <p
+          class="w-16 h-16 font-medium text-3xl mx-auto my-1 pt-1 rounded-full border-8 text-white bg-slate-600"
+          [ngClass]="[
+            tyre.compound == 'soft' ? 'border-red-500' : '',
+            tyre.compound == 'medium' ? 'border-yellow-400' : '',
+            tyre.compound == 'hard' ? 'border-white' : '',
+            tyre.compound == 'intermediate' ? 'border-green-500' : '',
+            tyre.compound == 'wet' ? 'border-blue-500' : ''
+          ]"
+        >
+          {{ tyre.laps }}
+        </p>
         <button
           (click)="changeTyreLap(tyre.compound, -1)"
-          class="change-button mx-1 mt-1 w-8 h-8 align-middle rounded-lg bg-slate-600 text-white"
+          class="change-button bg-red-500"
         >
           -
         </button>
         <button
           (click)="changeTyreLap(tyre.compound, +1)"
-          class="change-button mx-1 mt-1 w-8 h-8 align-middle rounded-lg bg-slate-600 text-white"
+          class="change-button bg-green-500"
         >
           +
         </button>
@@ -39,50 +51,106 @@
     </div>
   </div>
 
-  <div class="default-strat">
-    <h3>Default Strat</h3>
-    <ul *ngFor="let s of stints; let i = index">
-      <li>
-        id:{{ i }} C:{{ s.compound | titlecase }} | L:{{ s.laps }}
-        <br />
-        Compound
-        <span
-          ><button
+  <div
+    class="default-strat bg-slate-200 text-center mx-auto max-w-2xl rounded-md"
+  >
+    <h3 class="text-2xl mb-2 py-2 bg-slate-500 text-white rounded-t-md">
+      Default Strat
+    </h3>
+    <ul *ngFor="let s of stints; let i = index" class="">
+      <li
+        class="flex align-middle justify-evenly my-3 pb-2 border-b-2 border-b-gray-300"
+      >
+        <section>
+          <p
+            class="font-bold h-10 w-10 pt-2 px-1 text-white my-3 bg-slate-400 rounded-lg"
+          >
+            {{ i + 1 }}
+          </p>
+
+          <p
+            class="font-bold h-10 w-10 pt-2 px-1 text-white my-3 bg-slate-300 rounded-lg"
+          >
+            L:{{ calcPitLap(stints, i) }}
+          </p>
+        </section>
+
+        <section class="w-1/5 my-auto">
+          <p
+            class="w-14 h-14 font-medium text-2xl mx-auto pt-1 rounded-full border-8 text-white bg-slate-600"
+            [ngClass]="[
+              s.compound == 'soft' ? 'border-red-500' : '',
+              s.compound == 'medium' ? 'border-yellow-400' : '',
+              s.compound == 'hard' ? 'border-white' : '',
+              s.compound == 'intermediate' ? 'border-green-500' : '',
+              s.compound == 'wet' ? 'border-blue-500' : ''
+            ]"
+          >
+            {{ s.laps }}
+          </p>
+          <p class="text-lg font-semibold">{{ s.compound | titlecase }}</p>
+        </section>
+
+        <section class="my-auto">
+          <p class="align-text-bottom">Change compound</p>
+          <button
             (click)="changeCompound(i, s.compound, -1)"
-            class="change-button"
+            class="change-button bg-slate-500"
           >
             &lt;
-          </button></span
-        >
-        <span
-          ><button
+          </button>
+          <button
             (click)="changeCompound(i, s.compound, +1)"
-            class="change-button"
+            class="change-button bg-slate-500"
           >
             &gt;
-          </button></span
+          </button>
+        </section>
+
+        <section class="my-auto">
+          <p>Change Laps</p>
+          <button
+            (click)="changeStintLap(i, -1)"
+            class="change-button bg-red-400"
+          >
+            -
+          </button>
+          <button
+            (click)="changeStintLap(i, +1)"
+            class="change-button bg-green-400"
+          >
+            +
+          </button>
+        </section>
+
+        <button
+          class="mx-2 my-auto w-6 h-6 rounded-lg bg-red-400 text-white"
+          (click)="removeStint(i)"
         >
-        <br />
-        Lap
-        <span
-          ><button (click)="changeStintLap(i, -1)" class="change-button">
-            &lt;
-          </button></span
-        >
-        <span
-          ><button (click)="changeStintLap(i, +1)" class="change-button">
-            &gt;
-          </button></span
-        >
-        <br />
-        Remove
-        <span><button (click)="removeStint(i)">X</button></span>
+          X
+        </button>
       </li>
     </ul>
-    <button (click)="addStint()">Add Stint</button>
+    <button
+      (click)="addStint()"
+      class="bg-green-400 text-white text-lg font-medium rounded-lg px-3 py-1"
+    >
+      Add Stint
+    </button>
+    <section class="bg-slate-500 text-white mt-2 rounded-b-lg py-3 text-xl">
+      <span>Laps {{ stratTotalLaps }}/{{ totalLaps }}</span>
+      (<span
+        class="font-bold"
+        [ngClass]="
+          stratTotalLaps - totalLaps < 0 ? 'text-red-500' : 'text-green-500'
+        "
+        >{{ stratTotalLaps - totalLaps > 0 ? "+" : ""
+        }}{{ stratTotalLaps - totalLaps }}</span
+      >)
+    </section>
   </div>
 
   <div class="alt-strat">
-    <h3>Alt Strat</h3>
+    <!-- <h3>Alt Strat</h3> -->
   </div>
 </div>
