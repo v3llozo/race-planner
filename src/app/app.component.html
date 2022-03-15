@@ -12,9 +12,10 @@
 
   <app-tyre-laps [tyres]="tyres"></app-tyre-laps>
 
-  <div class="default-strat card max-w-4xl">
+  <app-strat [totalLaps]="totalLaps" [stints]="stints"></app-strat>
+  <!-- <div class="default-strat card max-w-4xl">
     <h3 class="card-title">Default Strat</h3>
-    <ul *ngFor="let s of stints; let i = index" class="">
+    <ul *ngFor="let s of stints; let i = index">
       <li
         class="flex align-middle justify-evenly my-1 border-b-2 border-b-gray-300"
       >
@@ -103,9 +104,9 @@
         }}{{ stratTotalLaps - totalLaps }}</span
       >)
     </section>
-  </div>
+  </div> -->
 
-  <div class="race-map m-3 card max-w-4xl h-96">
+  <!-- <div class="race-map m-3 card max-w-4xl h-96">
     <h3 class="card-title">Race map</h3>
     <div class="mt-3 mx-auto h-fit bg-red-500">
       <ngx-charts-area-chart
@@ -123,5 +124,5 @@
       >
       </ngx-charts-area-chart>
     </div>
-  </div>
+  </div> -->
 </div>
