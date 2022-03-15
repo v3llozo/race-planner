@@ -117,11 +117,6 @@ export class AppComponent {
     this.calcStratLaps();
   }
 
-  changeLaps(value: any) {
-    this.totalLaps = value.target.value;
-    this.calcStratLaps();
-  }
-
   changeTyreLap(c: string, n: number) {
     c == 'soft' ? (this.tyres[0].laps += n) : '';
     c == 'medium' ? (this.tyres[1].laps += n) : '';
