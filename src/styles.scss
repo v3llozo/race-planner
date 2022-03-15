@@ -4,5 +4,21 @@
 @tailwind utilities;
 
 html {
-    @apply bg-gray-700
+  @apply bg-gray-700;
+}
+
+.change-button {
+  @apply mx-1 mt-1 w-10 h-10 align-middle rounded-lg text-white;
+}
+
+.card {
+  @apply bg-slate-200 text-center mx-auto rounded-xl;
+}
+
+.card-title {
+  @apply text-2xl mb-2 py-2 bg-slate-500 text-white rounded-t-lg;
+}
+
+.card-footer {
+  @apply bg-slate-500 text-white mt-2 rounded-b-lg py-3 text-xl;
 }

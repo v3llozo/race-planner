@@ -10,41 +10,7 @@
     (changeTotalLaps)="totalLaps = $event"
   ></app-total-laps>
 
-  <div class="card max-w-4xl w-auto mb-3 pb-3">
-    <h3 class="card-title">Tyre Laps</h3>
-    <div class="flex flex-row flex-wrap justify-center">
-      <div
-        *ngFor="let tyre of tyres"
-        class="tyres-config w-1/6 bg-slate-300 rounded-lg px-3 pb-2 pt-1 m-1 min-w-fit max-w-full"
-      >
-        <p class="font-semibold text-lg">{{ tyre.compound | titlecase }}</p>
-        <p
-          class="w-16 h-16 font-medium text-3xl mx-auto my-1 pt-1 rounded-full border-8 text-white bg-slate-600"
-          [ngClass]="[
-            tyre.compound == 'soft' ? 'border-red-500' : '',
-            tyre.compound == 'medium' ? 'border-yellow-400' : '',
-            tyre.compound == 'hard' ? 'border-white' : '',
-            tyre.compound == 'intermediate' ? 'border-green-500' : '',
-            tyre.compound == 'wet' ? 'border-blue-500' : ''
-          ]"
-        >
-          {{ tyre.laps }}
-        </p>
-        <button
-          (click)="changeTyreLap(tyre.compound, -1)"
-          class="change-button bg-red-400"
-        >
-          -
-        </button>
-        <button
-          (click)="changeTyreLap(tyre.compound, +1)"
-          class="change-button bg-green-400"
-        >
-          +
-        </button>
-      </div>
-    </div>
-  </div>
+  <app-tyre-laps [tyres]="tyres"></app-tyre-laps>
 
   <div class="default-strat card max-w-4xl">
     <h3 class="card-title">Default Strat</h3>
