@@ -177,7 +177,7 @@ export class AppComponent {
   calcPitLap(stints: Tyre[], n: number) {
     let pitLap = 0;
     for (let i = 1; i <= n; i++) {
-      pitLap += stints[i-1].laps;
+      pitLap += stints[i - 1].laps;
     }
     return pitLap;
   }
@@ -191,8 +191,16 @@ export class AppComponent {
       intermediate: '#22c55d',
       wet: '#3683f6',
     };
+    let tyreLife = {
+      soft: this.tyres[0].laps,
+      medium: this.tyres[1].laps,
+      hard: this.tyres[2].laps,
+      intermediate: this.tyres[3].laps,
+      wet: this.tyres[4].laps,
+    };
     let colors: any[] = [];
     let currentLap = 0;
+
     this.stints.forEach((s, i) => {
       colors.push({ name: s.compound, value: tyreColors[s.compound] });
       map.push({
@@ -200,10 +208,10 @@ export class AppComponent {
         series: [
           {
             name: currentLap, //start lap
-            value: s.laps, //life lap
+            value: tyreLife[s.compound], //life lap
           },
           {
-            name: currentLap + s.laps, //end lap
+            name: currentLap + tyreLife[s.compound], //end lap
             value: 0, // end life
           },
         ],
