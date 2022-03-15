@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Color } from '@swimlane/ngx-charts';
+import { tyres } from './tyre-laps/tyres';
 
 @Component({
   selector: 'app-root',
@@ -9,80 +10,14 @@ import { Color } from '@swimlane/ngx-charts';
 export class AppComponent {
   title = 'Race Planner';
   @Input() totalLaps: number = 30;
-  @Output() changeTotalLaps: any;
-  @Input() tyres: Tyre[] = [
-    {
-      compound: 'soft',
-      laps: 7,
-      threshold: 15,
-    },
-    {
-      compound: 'medium',
-      laps: 11,
-      threshold: 10,
-    },
-    {
-      compound: 'hard',
-      laps: 15,
-      threshold: 5,
-    },
-    {
-      compound: 'intermediate',
-      laps: 18,
-      threshold: 0,
-    },
-    {
-      compound: 'wet',
-      laps: 18,
-      threshold: 0,
-    },
-  ];
+  @Input() tyres: Tyre[] = tyres;
   @Input() stints: Tyre[] = [];
+  @Output() changeTotalLaps: any;
   @Output() tyresChange = new EventEmitter<Tyre[]>();
   @Output() stintsChange = new EventEmitter<Tyre[]>();
   stratTotalLaps: number = 0;
 
-  multi = [
-    {
-      name: 'Soft',
-      series: [
-        {
-          name: '0',
-          value: 7,
-        },
-        {
-          name: '10',
-          value: 0,
-        },
-      ],
-    },
-    {
-      name: 'Hard',
-      series: [
-        {
-          name: '10', //startlap
-          value: 15, //life lap
-        },
-        {
-          name: '15', //end lap
-          value: 0, // end life
-        },
-      ],
-    },
-    {
-      name: 'Medium',
-      series: [
-        {
-          name: '15',
-          value: 10,
-        },
-        {
-          name: '25',
-          value: 0,
-        },
-      ],
-    },
-  ];
+  multi: any[] = [];
   view: [number, number] = [880, 320];
   legend: boolean = false;
   showLabels: boolean = false;
@@ -115,15 +50,6 @@ export class AppComponent {
       }
     );
     this.calcStratLaps();
-  }
-
-  changeTyreLap(c: string, n: number) {
-    c == 'soft' ? (this.tyres[0].laps += n) : '';
-    c == 'medium' ? (this.tyres[1].laps += n) : '';
-    c == 'hard' ? (this.tyres[2].laps += n) : '';
-    c == 'intermediate' ? (this.tyres[3].laps += n) : '';
-    c == 'wet' ? (this.tyres[4].laps += n) : '';
-    this.tyresChange.emit(this.tyres);
   }
 
   changeStintLap(i: number, lap: number) {
