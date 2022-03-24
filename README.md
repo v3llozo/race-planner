@@ -1,5 +1,16 @@
 # RacePlanner
 
+A [Motorsport Manager](https://store.steampowered.com/app/415200/Motorsport_Manager/) simple race planner.
+
+![overlay](./docs/overlay.png)
+![img](./docs/Tyre_Laps.png)
+![img](./docs/Stints_Pitstops.png)
+![img](./docs/Race_map.png)
+
+
+
+---
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
 
 ## Development server
